@@ -1,6 +1,7 @@
 import pandas as pd 
 import numpy as np
 import prettytable as pt
+
 def input_data():
     try:
         data= pd.read_excel('./test.xlsx')
@@ -20,19 +21,18 @@ def input_data():
             std=std.append(data[((data.time==i) & (data.location==j))].std(),ignore_index=True)
     del ave['sample']
     del std['sample']
+    return data,time,ave,std
+#Pretty table for dataframe and ndarray 
+def Prettytable_DF(df):
+    try:
+        table = pt.PrettyTable([''] + list(df.columns))
+        for row in df.itertuples():
+            table.add_row(row)
+        return str(table)
+    except:
+        table = pt.PrettyTable()
+        for row in df:
+            table.add_row(row)
+        return str(table)
 
-    return data,ave,std
-def Prettytable_DF(df=pd.DataFrame()):
-    table = pt.PrettyTable([''] + list(df.columns))
-    for row in df.itertuples():
-        table.add_row(row)
-    return str(table)
-def Prettytable_ND(ndarray=np.array([])):
-    table = pt.PrettyTable()
-    for row in ndarray:
-        table.add_row(row)
-    return str(table)
-    for i in range(row_number):
-        table.add_row(dataframe.iloc[i,:].values)
-    print(table)
-print(Prettytable_DF(input_data))
+print(Prettytable_DF(input_data()[0]),Prettytable_DF(PearsonCorrelation(input_data()[0])[0]))
