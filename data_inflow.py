@@ -1,7 +1,13 @@
 import pandas as pd 
 import numpy as np
 import prettytable as pt
-
+import matplotlib.pyplot as plt 
+import seaborn as sns
+def Heatmap(self):
+    fig = plt.figure()
+    ax = plt.subplot(111)
+    sns.heatmap(self,ax=ax,cmap=plt.cm.coolwarm,alpha=0.85,xticklabels=list(self.columns),yticklabels=list(self.columns),linewidths=.1,square=True)
+    plt.show()
 def input_data():
     try:
         data= pd.read_excel('./test.xlsx')
@@ -35,4 +41,4 @@ def Prettytable_DF(df):
             table.add_row(row)
         return str(table)
 
-print(Prettytable_DF(input_data()[0]),Prettytable_DF(PearsonCorrelation(input_data()[0])[0]))
+Heatmap(input_data()[2])
