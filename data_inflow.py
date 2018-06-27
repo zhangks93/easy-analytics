@@ -40,5 +40,20 @@ def Prettytable_DF(df):
         for row in df:
             table.add_row(row)
         return str(table)
+#plot histogram
+def Histogram(self):
+    for i in range(0,len(self.columns)):
+         x=self.iloc[:,i]
+         x.plot(kind='bar',title="Histogram of %s"%self.columns[i])
+         plt.show()
 
-Heatmap(input_data()[2])
+#plot line chart
+def LineChart(self):
+    a=0
+    for i in range(0,len(self.columns)):
+        x=self.iloc[:,i].unstack(level=-1)
+        x.plot(kind='line',title="LineChart of %s"%self.columns[i])
+        a=a+1
+    plt.show()
+
+Histogram(input_data()[2])
