@@ -27,6 +27,11 @@ def input_data():
             std=std.append(data[((data.time==i) & (data.location==j))].std(),ignore_index=True)
     del ave['sample']
     del std['sample']
+    writer = pd.ExcelWriter('./output/Preprocess.xlsx')
+    data.to_excel(writer,'data')
+    ave.to_excel(writer,'ave')
+    std.to_excel(writer,'std')
+    writer.save()
     return data,time,ave,std
 #Pretty table for dataframe and ndarray 
 def Prettytable_DF(df):
@@ -56,4 +61,4 @@ def LineChart(self):
         a=a+1
     plt.show()
 
-Histogram(input_data()[2])
+input_data()
