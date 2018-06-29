@@ -1,4 +1,4 @@
-import scipy.stats as stats
+ import scipy.stats as stats
 
 def PearsonCorrelation(self):
     r = np.zeros(len(self.columns) * len(self.columns)).reshape(len(self.columns), len(self.columns))
@@ -13,3 +13,4 @@ def PearsonCorrelation(self):
     R=pd.DataFrame(r,index=self.columns,columns=self.columns)
     P=pd.DataFrame(p,index=self.columns,columns=self.columns)
     return R,P
+
