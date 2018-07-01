@@ -59,10 +59,7 @@ def Description(self):
     plt.figure()
     self.plot.box()
     plt.savefig('./output/description/box.png',dpi=1000,bbox_inches='tight')
-def PricipleComponentAnalysis(self,n):
-       pca=PCA(n_components=n)
-       de=pca.fit(self.values).transform(self.values)
-       return de,pca.explained_variance_ratio_,pca.components_
+
 def IndependentComponentAnalysis(self,n):
     ica = FastICA(n_components=n)
     de=ica.fit_transform(self.values)
