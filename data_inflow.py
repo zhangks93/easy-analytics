@@ -4,15 +4,16 @@ import prettytable as pt
 import matplotlib.pyplot as plt 
 import seaborn as sns
 from sklearn.decomposition import FastICA,PCA
+import statsmodels.api as sm
 def input_data():
     try:
-        data= pd.read_excel('./input/test.xlsx')
+        data= pd.read_excel('./input/test1.xlsx')
     except:
         data = pd.read_csv('./input/test.csv')
     return data
 def Preprocess(data):
     time=np.unique(data.ix[:,0].values)
-    location=np.unique(data.ix[:,0].values)
+    location=np.unique(data.ix[:,1].values)
     #Imputation of missing values
     dropNa=data.dropna()
     imputna=data.fillna(data.mean())
@@ -64,7 +65,24 @@ def IndependentComponentAnalysis(self,n):
     ica = FastICA(n_components=n)
     de=ica.fit_transform(self.values)
     return ica.mixing_,de
-
+def LinerRegression(self,a,b,c):
+    x=self.ix[:,a:b]
+    X=sm.add_constant(x)
+    Y=self.ix[:,c]
+    print(x.columns.values,Y.name)
+    model = sm.OLS(Y, X)
+    results = model.fit()
+    print(results.summary())
+    if ((b-a)==1):
+        plt.scatter(x, Y, alpha=0.3) 
+        X_prime=np.linspace(x.min(), x.max(),100)[:,np.newaxis]
+        X_prime=sm.add_constant(X_prime)
+        y_hat=results .predict(X_prime)
+        plt.plot(X_prime[:,1], y_hat, 'r', alpha=0.9) 
+        plt.xlabel(x.columns.values[0])
+        plt.ylabel(Y.name)
+        plt.show()
 data=input_data()
 data=Preprocess(data)
-print(PricipleComponentAnalysis(data,3))
+for i in range(8,9):
+     LinerRegression(data.ix[:,2:],0,1,i)
